@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    image: design-dev-health-app:1.0
+    ports:
+      - "8080:8080"
