@@ -1,0 +1,32 @@
+services:
+  ansible:
+    build:
+      context: .
+      dockerfile: ansible/Dockerfile
+    image: lab3-ansible:1.0
+    depends_on:
+      - nginx
+      - app
+    networks:
+      - lab3
+
+  nginx:
+    build:
+      context: target
+    image: lab3-target:1.0
+    hostname: nginx
+    ports:
+      - "8080:80"
+    networks:
+      - lab3
+
+  app:
+    build:
+      context: target
+    image: lab3-target:1.0
+    hostname: app
+    networks:
+      - lab3
+
+networks:
+  lab3:
