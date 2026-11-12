@@ -1,0 +1,27 @@
+---
+- name: Install application packages
+  ansible.builtin.apt:
+    name:
+      - openjdk-21-jdk
+      - maven
+    update_cache: true
+    state: present
+
+- name: Copy application source
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../app/"
+    dest: /opt/health-app/
+
+- name: Build application
+  ansible.builtin.command: mvn -q -DskipTests package
+  args:
+    chdir: /opt/health-app
+
+- name: Install launch script
+  ansible.builtin.copy:
+    src: run_app.sh
+    dest: /opt/health-app/run_app.sh
+    mode: "0755"
+
+- name: Start application
+  ansible.builtin.command: /opt/health-app/run_app.sh

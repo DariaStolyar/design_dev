@@ -1,0 +1,10 @@
+---
+- name: Deploy application
+  hosts: app_servers
+  roles:
+    - app
+
+- name: Configure nginx
+  hosts: nginx_servers
+  roles:
+    - nginx
